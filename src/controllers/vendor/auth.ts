@@ -114,8 +114,6 @@ function login(body: any, headers: any, deviceip: any): Promise<any> {
                     }
                     resolve({
                         token,
-                        token12:"update",
-                        Number:"123",
                         isUser: true,
                         storeType:storeType,
                         storeTypeId:storeTypeId,
