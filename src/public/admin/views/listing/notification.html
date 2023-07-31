@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+
+    <!--<link rel="stylesheet" href="dist/pagination.min.css">-->
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- JS FILES -->
+    <script src="../../admin/scripts/listing/notification.js"></script>
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/dashboard.js"></script>
+    <script src="../../admin/scripts/common/validation.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css" />
+    <link rel="stylesheet" href="../css/intlTelInput.css">
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/css/intlTelInput.css'>
+    <style type="text/css">
+        .container {
+            margin: 100px auto;
+        }
+
+        .header_btn {
+            cursor: pointer;
+            height: 36px !important;
+            width: 142px !important;
+            background-color: white;
+            color: #1AB394;
+            border: 1px solid #1AB394;
+        }
+
+        sendBy .header_btn.active {
+            cursor: pointer;
+            color: white;
+            background-color: #1AB394;
+        }
+
+        .header_btn:hover {
+            cursor: pointer;
+            color: white;
+            background-color: #1AB394;
+        }
+
+        .btn_set {
+            padding-left: 28px;
+        }
+
+        .userType_search {
+            width: 35%;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .lastline {
+                margin: 0px !important;
+                width: 100% !important;
+                display: inline-block !important;
+            }
+        }
+
+        .tab_pills_container a {
+            border: 1px solid #1AB394;
+            color: #1AB394 !important;
+            margin-right: 20px;
+            padding: 8px 10px !important;
+            border-radius: 10px;
+            margin-top: 2px;
+        }
+
+        ul.nav.tab_pills_container {
+            flex-wrap: nowrap !important;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: white !important;
+            background-color: #1AB394 !important;
+            border-radius: 3px !important;
+        }
+
+        @media only screen and (max-width: 991px) {
+            .userType_search {
+                width: 100%;
+            }
+        }
+
+        .titleSelect input {
+            border: 1px solid #5bc3db !important;
+            height: 50px;
+        }
+
+        .titleSelect select {
+            border: 1px solid #5bc3db !important;
+            height: 50px;
+        }
+
+        .textareaField textarea {
+            border: 1px solid #5bc3db !important;
+
+        }
+
+        .sendBulkNotification,
+        .sendSingleNotification {
+            border: 3px solid #05a7cb;
+            padding: 20px;
+            background-color: white !important;
+        }
+    </style>
+    <script>
+        var jqOld = jQuery.noConflict();
+        jqOld(function () {
+            jqOld("#date").datepicker({
+                maxDate: new Date(),
+                dateFormat: 'yy-mm-dd'
+            });
+        })
+    </script>
+</head>
+
+<body onload="checkPermission();notificationDetails();">
+    <div id="wrapper">
+        <navbar></navbar>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn" href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to the Jroute Admin </span>
+                        </li>
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout .png"></a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="wrapper border-bottom  page-heading">
+                <div class="d-flex justify-content-between align-items-center flex-wrap pageheading">
+                    <div class="mt-3">
+                        <h2><strong>Notification Management</strong></h2>
+                    </div>
+                    <div class="d-flex justify-content-around mt-4">
+                        <ul class="nav nav-pills tab_pills_container">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#flamingo" role="tab"
+                                    aria-controls="pills-flamingo" aria-selected="true"
+                                    onclick="notificationDetails();">Notification Lists</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#cuckoo1" role="tab"
+                                    aria-controls="pills-cuckoo1" aria-selected="false">Send Bulk
+                                    Notification</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#cuckoo" role="tab"
+                                    aria-controls="pills-cuckoo" aria-selected="false">Send Single
+                                    Notification</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+
+                    <!-- notification list -->
+                    <div class="tab-pane fade show active" id="flamingo" role="tabpanel" aria-labelledby="flamingo-tab">
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <!-- <<<<<<< HEAD -->
+                            <!-- <div class="row"> -->
+                            <!-- <div class="col-lg-12"> -->
+                            <!-- <div class="ibox" id="ibox1">
+                                        <div class="ibox-title">
+                                            <div class="row">
+                                                <div class="col-lg-7">
+                                                    <div class="search userType_search">
+                                                        <select class="form-control" name="role" id="role"
+                                                            onchange="notificationDetails()">
+                                                            <option disabled value="" selected hidden>User Type</option>
+                                                            <option value="User">User</option>
+                                                            <option value="Both">Both</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-4 col-lg-2">
+                                                    <div class="search">
+                                                        <div class="input-group date"
+                                                            style="width: 100% !important; float: right;">
+                                                            <input type="date1" placeholder="YYYY-MM-DD"
+                                                                class="form-control" id="date" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-8 col-lg-3 userSearch_data">
+                                                    <div class="search d-flex align-items-center w-100">
+                                                        <div class="search_data">
+                                                            <input type="text" oninput="validate(this)"
+                                                                placeholder="Search" name="search" id="fog"
+                                                                onkeyup="submit();">
+                                                            <i class="fa fa-search"></i>
+                                                        </div>
+                                                        <button class="btn" id="btnId" onclick="notificationDetails();"
+                                                            disabled><img
+                                                                src="../../../admin/assets/img/VectorLogout.png"></button>
+                                                    </div>
+                                                </div> -->
+                            <!-- ======= -->
+                            <!-- <div class="row">
+                                <div class="col-lg-12"> -->
+                            <div class="ibox" id="ibox1">
+                                <div class="ibox-title">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <div class="search userType_search">
+                                                <select class="form-control" name="role" id="role"
+                                                    onchange="notificationDetails()">
+                                                    <option disabled value="" selected hidden>User
+                                                        Type</option>
+                                                    <option value="User">User</option>
+                                                    <option value="Both">Both</option>
+                                                </select>
+                                                <!-- >>>>>>> 462fdf2919694dae536a4c9aa8209dbc2001ea3d -->
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4 col-lg-2">
+                                            <div class="search">
+                                                <div class="input-group date"
+                                                    style="width: 100% !important; float: right;">
+                                                    <input type="date1" placeholder="YYYY-MM-DD" class="form-control"
+                                                        id="date" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-8 col-lg-3 userSearch_data">
+                                            <div class="search d-flex align-items-center w-100">
+                                                <div class="search_data">
+                                                    <input type="text" oninput="validate(this)" placeholder="Search"
+                                                        name="search" id="fog" onkeyup="submit();">
+                                                    <i class="fa fa-search"></i>
+                                                </div>
+                                                <button class="btn" id="btnId" onclick="notificationDetails();"
+                                                    disabled><img
+                                                        src="../../../admin/assets/img/VectorLogout.png"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="sk-spinner sk-spinner-double-bounce">
+                                        <div class="sk-double-bounce1"></div>
+                                        <div class="sk-double-bounce2"></div>
+                                    </div>
+                                    <div class="table-responsive notificationManagementTable">
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th><strong>S.No.<a onclick="notificationDetails('SNo')"><img
+                                                                    src="../../../admin/assets/img/updownarrow .svg"></a></strong>
+                                                    </th>
+                                                    <th><strong>Image</strong></th>
+                                                    <th><strong>Date and Time</strong></th>
+                                                    <th><strong>Content</strong></th>
+                                                    <th><strong>User Type</strong></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table"> </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="alert alert-primary hide" id="noData" role="alert">
+                                        No data found
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- </div>
+                            </div> -->
+                            <div class="box" id="page1">
+                                <ul id="example-1" class="pagination"></ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- send single notification -->
+                    <div class="tab-pane fade" id="cuckoo" role="tabpanel" aria-labelledby="profile-tab">
+                        <div id="single_notif" class="wrapper wrapper-content animated fadeInRight">
+                            <form id="form" method="post" enctype="multipart/form-data" role="form">
+                                <div class="ibox ">
+                                    <div class="ibox-content sendBulkNotification">
+                                        <div class="row titleSelect">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 class="text-left">Title<span style="color: red;">&#42;</span>
+                                                    </h4>
+                                                    <input type="text" oninput="validate(this)"
+                                                        placeholder="Enter Title (In English)" class="form-control"
+                                                        id="title11" name="title11" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" oninput="validate(this)"
+                                                        placeholder="Enter Title (In Arabic)" class="form-control"
+                                                        id="title1" name="title1" required>
+                                                </div>
+                                            </div>
+                                            <!-- <input type="tel" id="countryCode" name="countryCode"
+                                                class="form-control mobile flagInput" required /> -->
+                                            <!-- <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 class="text-left">Enter Mobile Number<span
+                                                            style="color: red;">&#42;</span></h4>
+                                                    <input type="tel" id="countryCode" name="countryCode"
+                                                        class="form-control mobile flagInput" required />
+                                                    <input type="text" onclick="mobileNum(this)"
+                                                        placeholder="Enter mobile Number" class="form-control"
+                                                        id="phoneNumber" name="phoneNumber" required>
+                                                </div>
+
+                                            </div> -->
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <h4 class="text-left">Enter Mobile Number<span
+                                                    style="color: red;">&#42;</span></h4>                                                <div class="row mx-0">
+                                                    <div class="col-12 d-flex tell-code pl-1">
+                                                        <input type="tel" id="countryCode" name="countryCode"
+                                                            class="form-control mobile flagInput" required />
+                                                        <input type="text" onclick="mobileNum(this)" style="margin-left: 99px;"
+                                                            placeholder="Enter mobile Number" class="form-control"
+                                                            id="phoneNumber" name="phoneNumber" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row textareaField">
+                                            <div class="col-lg-12 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 class="text-left">Write Message<span
+                                                            style="color: red;">&#42;</span></h4>
+                                                    <textarea class="form-control" rows="10" oninput="validate(this)"
+                                                        id="description11" name='description11'
+                                                        placeholder="Write Message here (In English)" maxlength="120"
+                                                        required></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" oninput="validate(this)" rows="10"
+                                                        id="description1" name='description1'
+                                                        placeholder="Write Message here (In Arabic)" maxlength="120"
+                                                        required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-12">
+                                                <h4 class="text-left">Upload image(optional)<h4>
+                                                        <div class="text-center" style="padding-right: 214px;">
+                                                            <label id="image" style="cursor: pointer;">
+                                                                <img alt="image" id="blah"
+                                                                    src="../../admin/assets/img/emptyphoto.png"
+                                                                    style="height:100px ; width:100px; margin-right: 97px; border-radius: 13px;margin-right: 161px;">
+                                                                <input class="singleFilChoose" type='file'
+                                                                    accept="image/*" name='image' id="blah"
+                                                                    onchange="readURL(this)" style="display: none;">
+                                                            </label>
+                                                        </div>
+                                                        <!-- <h5 class="text-left">UploadImage (Optional)</h5> -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white single_cancel"
+                                                style="width: 130px; height: 33px;" data-dismiss="modal"
+                                                onclick="notification_list();">Cancel</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                style="width: 130px; height: 33px;" value="submit"
+                                                id="Submit">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- bulk notification -->
+                    <div class="tab-pane fade" id="cuckoo1" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <form id="msform" method="post" enctype="multipart/form-data" role="form">
+                                <div class="ibox ">
+                                    <div class="ibox-content sendBulkNotification">
+                                        <div class="row titleSelect">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 style="margin-right: 660px;">Title<span
+                                                            style="color: red;">&#42;</span></h4>
+                                                    <input type="text" oninput="validate(this)"
+                                                        placeholder="Enter Title (In English)" class="form-control"
+                                                        id="title" name="title" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" oninput="validate(this)"
+                                                        placeholder="Enter Title (In Arabic)" class="form-control"
+                                                        id="ar_title" name="ar_title" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 class="text-left">Select Type<span
+                                                            style="color: red;">&#42;</span></h4>
+                                                    <select class="form-control" name="role" id="role" required>
+                                                        <!-- <option disabled value="" selected hidden>Search</option> -->
+                                                        <option value="User">User</option>
+                                                        <option value="Both">Both</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row textareaField">
+                                            <div class="col-lg-12 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4 class="text-left">Write Message<span
+                                                            style="color: red;">&#42;</span></h4>
+                                                    <textarea class="form-control" oninput="validate(this)" rows="10"
+                                                        id="description" name='description'
+                                                        placeholder="Write Message here" maxlength="120"
+                                                        required></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <!-- <h4 style="margin-right: 1338px;">Write Message*</h4> -->
+                                                    <textarea class="form-control" oninput="validate(this)" rows="10"
+                                                        id="ar_description" name='ar_description'
+                                                        placeholder="Write Message here (In Arabic)" maxlength="120"
+                                                        required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-12">
+                                                <h4 class="text-left">Upload image(optional)</h4>
+                                                <div style="width: 100px;">
+                                                    <label id="image" style="cursor: pointer;">
+                                                        <img alt="image" id="blah1"
+                                                            src="../../admin/assets/img/emptyphoto.png"
+                                                            style="height:100px ; width:100px; border-radius: 13px;"
+                                                            onchange="readURL1();">
+                                                        <input class="bulkFilChoose" type='file' accept="image/*"
+                                                            name='image' id="blah1" onchange="readURL1(this)"
+                                                            style="display: none;">
+                                                    </label>
+                                                </div>
+                                                <!-- <h5 class="text-left">Upload Image (Optional)</h5> -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="cancel"
+                                                class="btn btn-white bulkNotification_cancel"
+                                                style="width: 130px; height: 33px;" data-dismiss="modal"
+                                                onclick="notification_list();">Cancel</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                style="width: 130px; height: 33px;" value="submit"
+                                                id="Submit">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <footer></footer>
+            </div>
+            <footer></footer>
+        </div>
+        </form>
+    </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../../admin/assets/js/inspinia.js"></script>
+    <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/js/intlTelInput.js'></script>
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('/login');
+        }
+
+
+        function notification_list() {
+            window.location.replace('/admin/notification');
+        }
+        // $("#editform").submit(function (e) {
+        //     e.preventDefault();
+        //     updateReason();
+
+        // });
+        function mobileNoselect() {
+            if ($('#form').length) {
+                $(".mobile").intlTelInput();
+                $(".mobile").intlTelInput("setNumber", "+91");
+            };
+        };
+        //* Select js
+        function nice_Select() {
+            if ($('.product_select').length) {
+                $('select').niceSelect();
+            };
+        };
+        // Function Calls* 
+        // verificationForm ();
+        mobileNoselect();
+        nice_Select();
+        //******Search value by Enter**************/
+        $("#fog").keyup(function (event) {
+            if (document.getElementById("fog").value === "") {
+                //take no action
+            } else {
+                if (event.keyCode === 13) {
+                    $("#btnId").click();
+                }
+            }
+        });
+
+        $("#msform").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('sendBy', 'Bulk')
+            formData.append('sendTo', document.getElementById('role').value)
+            console.log(localStorage.getItem('timeZone'), "llk")
+            $.ajax({
+                url: host + '/api/v1/admin/notification/sendNotification',
+                type: 'Post',
+                data: formData,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                    xhr.setRequestHeader('timezone', localStorage.getItem('timeZone'));
+                },
+                contentType: false,
+                processData: false,
+            }).done(function (data) {
+                // If successful
+                window.location.replace('/admin/notification');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                // If fail
+                alert(jqXHR.responseJSON.error)
+
+            })
+        });
+
+        // add and send single notification
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('sendBy', 'Single')
+            formData.append('title', document.getElementById('title11').value)
+            formData.append('ar_title', document.getElementById('title1').value)
+            formData.append('description', document.getElementById('description11').value)
+            formData.append('ar_description', document.getElementById('description1').value)
+
+            $.ajax({
+                url: host + '/api/v1/admin/notification/sendNotification',
+                type: 'Post',
+                data: formData,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                    xhr.setRequestHeader('timezone', localStorage.getItem('timeZone'));
+                },
+                contentType: false,
+                processData: false,
+            }).done(function (data) {
+                // If successful
+                window.location.replace('/admin/notification');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                // If fail
+                alert(jqXHR.responseJSON.error)
+
+            })
+        });
+
+        function mobileNum(phoneNumber) {
+            let numberRegex = /^\d{10}$/;
+            if (numberRegex.test(phoneNumber)) {
+                if (phoneNumber.length > 0 && phoneNumber.length < 10) {
+                    document.getElementById("numberError1").innerHTML = "Please enter 10 digits number"
+                } else {
+                    document.getElementById("numberError1").innerHTML = ""
+                }
+            } else {
+                if (phoneNumber.length > 0 && phoneNumber.length < 10) {
+                    document.getElementById("numberError1").innerHTML = "Please enter 10 digits number"
+                }
+            }
+        }
+        $(function () {
+            $("input[name='phoneNumber']").on('input', function (e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+        });
+
+
+        function mobileNoselect() {
+            if ($('#form').length) {
+                $(".mobile").intlTelInput();
+                $(".mobile").intlTelInput("setNumber", "+91");
+            };
+        };
+        //* Select js
+        function nice_Select() {
+            if ($('.product_select').length) {
+                $('select').niceSelect();
+            };
+        };
+        mobileNoselect();
+        nice_Select();
+
+
+    </script>
+</body>
+
+</html>

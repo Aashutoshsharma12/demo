@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <!-- <script src="../../admin/scripts/common/pipeline.js"></script> -->
+    <!-- <script src="../../admin/scripts/common/validation.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- js files -->
+    <script src="../../../admin/scripts/add/userView.js"></script>
+    <script src="../../../admin/scripts/auth/logout.js"></script>
+    <script src="../../../admin/scripts/dashboard.js"></script>
+    <!-- <script src="../../admin/scripts/index/index.js"></script> -->
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+
+</head>
+
+
+<style>
+    .form-control1,
+    .single-line {
+        background-color: #64cfbb63;
+        background-image: none;
+        border: 3px solid #e377a37d;
+        border-radius: 13px;
+        color: inherit;
+        display: block;
+        padding: 10px 10px;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        width: 100%;
+    }
+
+    .tabs-container {
+        border: 1px solid #1c84c6;
+    }
+
+    h4 {
+        font-weight: 500;
+        color: #676A6C;
+        font-size: 15px;
+        padding-top: 13px;
+        margin-bottom: 6px;
+        padding-left: 0px !important;
+    }
+
+    .newtext {
+        font-size: 13px;
+        color: #000;
+        font-weight: 600;
+        padding-top: 10px;
+    }
+
+    .imgDiv {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        float: left;
+        margin: 5px;
+    }
+
+    .imgDiv {
+        width: 100%;
+        height: 100%;
+    }
+
+    .container {
+        margin: 100px auto;
+    }
+
+    /* --------------Start Order Tracker------------------ */
+
+    .track_section .order-track-step {
+        display: flex;
+        height: 7rem;
+    }
+
+    .track_section .order-track-step:last-child {
+        overflow: hidden;
+        height: 4rem;
+    }
+
+    .track_section .order-track-step:last-child .order-track-status span:last-of-type {
+        display: none;
+    }
+
+    .track_section .order-track-status {
+        margin-right: 1.5rem;
+        position: relative;
+    }
+
+    .track_section .order-track-status-dot1 {
+        display: block;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        /* background: #23c6c8; */
+        background: rgb(222, 206, 206);
+    }
+
+    .track_section .order-track-status-line {
+        display: block;
+        margin: 0 auto;
+        width: 2px;
+        height: 7rem;
+        /* background: #23c6c8; */
+        border: 1px dashed #23c6c8;
+
+    }
+
+    .track_section .order-track-status-dot {
+        display: block;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        background: #23c6c8;
+    }
+
+    .track_section .order-track-status-line1 {
+        display: block;
+        margin: 0 auto;
+        width: 2px;
+        height: 7rem;
+        /* background: #23c6c8; */
+        /* border: 1px dashed #23c6c8; */
+        border: 1px dashed rgb(231, 219, 219);
+
+    }
+
+    .track_section .order-track-text-stat {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 3px;
+    }
+
+    .track_section .order-track-text-sub {
+        font-size: 15px;
+        font-weight: 300;
+    }
+
+    .track_section .order-track {
+        transition: all 0.3s height 0.3s;
+        transform-origin: top center;
+        overflow: auto !important;
+        white-space: nowrap !important;
+    }
+
+    /* --------------End Order Tracker------------------ */
+
+    @media only screen and (max-width: 992px) {
+        .lastline {
+            margin: 0px !important;
+            display: inline-block !important;
+        }
+
+    }
+
+    @media only screen and (max-width: 991px) {
+        .track_order_sidebar {
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+
+    }
+
+    button:active {
+        background-color: red !important;
+    }
+
+    .ibox-content {
+        border: 1px solid black;
+    }
+</style>
+
+<body onload="checkPermission();userDetails();user_orderList();">
+
+    <div id="wrapper" style="display: none;">
+        <navbar></navbar>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn" href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to the Jroute Admin </span>
+                        </li>
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout 1.png"></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="wrapper border-bottom page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>User Management</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:rgb(124, 124, 177)">
+                                <a href="/admin/user"><strong>User Management </strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:rgb(124, 124, 177)">
+                                <strong>User Details</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row mt-3 wrapper wrapper-content animated fadeInRight">
+                    <div class="col-12 col-md-8">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="ibox float-e-margins">
+                                    <div class="userDetailsCardHeader">
+                                        <h5>User Details</h5>
+                                    </div>
+                                    <div class="ibox-content bg-white">
+                                        <div class="row" href="">
+                                            <div class="col-lg-5 d-flex align-items-center justify-content-center p-0">
+                                                <div class="text-center">
+                                                    <img alt="image" id="blah"
+                                                        src="https://www.w3schools.com/howto/img_avatar.png"
+                                                        style="height:100px; width:100px; border-radius: 50%;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7">
+                                                <h4>Name: <span class="newtext" id="name"></span></h4>
+                                                <h4>Email ID: <span class="newtext" id="email"></span></h4>
+                                                <h4>Mobile: <span class="newtext" id="mobile"></span></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3">
+                                <div class="ibox float-e-margins">
+                                    <div class="userDetailsCardHeader">
+                                        <h5>Issues</h5>
+                                    </div>
+                                    <div class="ibox-content bg-white px-3" style="min-height: 175px;">
+                                        <h4>Pending Issues: <span class="newtext" id="pendingIssue"></span></h4><br>
+                                        <h4>Resolved Issues: <span class="newtext" id="resolvedIssue"></span></h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3">
+                                <div class="ibox float-e-margins">
+                                    <div class="userDetailsCardHeader">
+                                        <h5>Order</h5>
+                                    </div>
+                                    <div class="ibox-content bg-white px-3" style="min-height: 175px; ">
+                                        <h4> Completed: <span class="newtext" id="order_complete"></span></h4><br>
+                                        <h4> Cancelled: <span class="newtext" id="order_pending"></span></h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="ibox" id="ibox1">
+                                    <div class="tabs-container">
+                                        <div class="tab-content">
+                                            <div id="tab-1" class="tab-pane active">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" id="classId">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><strong>Order ID<a
+                                                                                onclick="user_orderList(-1,'orderId')"><img
+                                                                                    src="../../../admin/assets/img/updownarrow .svg"></a></strong>
+                                                                    </th>
+                                                                    <th><strong>UserName</strong>
+                                                                    </th>
+                                                                    <th><strong>VendorName</strong></th>
+                                                                    <th><strong>Cost</strong></th>
+                                                                    <th><strong>Status</strong></th>
+                                                                    <th><strong>Order Date and Time</strong></th>
+                                                                    <th><strong>Pickup Date and Time</strong></th>
+                                                                    <th><strong>Amount Paid</strong></th>
+                                                                    <th><strong>Track Order</strong></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="table">
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="box" id="page1">
+                                                            <ul id="example-1" class="pagination"></ul>
+                                                        </div>
+                                                        <div class="alert alert-primary hide" id="noData" role="alert">
+                                                            No data found
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="wrapper animated fadeInRight track_order_sidebar bg-white">
+                            <div class="px-3 py-3" style="border: 1px solid #1c84c6;">
+                                <h3 class="text-center" style="text-decoration: underline;">Track Order</h3><br><br>
+                                <section class="track_section">
+                                    <div class="order-track" id="track">
+                                        <!-- <div class="order-track-step">
+                                                <div class="order-track-status">
+                                                    <span class="order-track-status-dot"></span>
+                                                    <span class="order-track-status-line"></span>
+                                                </div>
+                                                <div class="order-track-text">
+                                                    <p class="order-track-text-stat">Order Placed</p>
+                                                    <span class="order-track-text-sub">21st November, 2019</span>
+                                                </div>
+                                            </div>
+                                            <div class="order-track-step">
+                                                <div class="order-track-status">
+                                                    <span class="order-track-status-dot"></span>
+                                                    <span class="order-track-status-line"></span>
+                                                </div>
+                                                <div class="order-track-text">
+                                                    <p class="order-track-text-stat">Food Point Accepted the Order</p>
+                                                    <span class="order-track-text-sub">01/10/2002, 4:30 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="order-track-step">
+                                                <div class="order-track-status">
+                                                    <span class="order-track-status-dot"></span>
+                                                    <span class="order-track-status-line"></span>
+                                                </div>
+                                                <div class="order-track-text">
+                                                    <p class="order-track-text-stat">Pickup schedule Date and time</p>
+                                                    <span class="order-track-text-sub">01/10/2002, 4:30 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="order-track-step">
+                                                <div class="order-track-status">
+                                                    <span class="order-track-status-dot"></span>
+                                                    <span class="order-track-status-line"></span>
+                                                </div>
+                                                <div class="order-track-text">
+                                                    <p class="order-track-text-stat">Order Picked Up date and time</p>
+                                                    <span class="order-track-text-sub">01/10/2002, 4:30 PM</span>
+                                                </div>
+                                            </div> -->
+                                    </div>
+                                </section>
+                                <!-- <ul>
+                                <li>
+                                    <h5 style="text-align: center;">Order placed<p style="margin-top: 5px;">01/10/2002, 4:30
+                                            PM
+                                        </p>
+                                    </h5>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <h5 style="text-align: center; margin-top: 105px;">Food Point Accepted the Order<p
+                                            style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                    </h5>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <h5 style="text-align: center; margin-top: 105px;">Pickup schedule Date and time<p
+                                            style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                    </h5>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <h5 style="text-align: center; margin-top: 105px;">Order Picked Up date and time<p
+                                            style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                    </h5>
+                                </li>
+                            </ul> -->
+                                <!-- <div class="ibox-content" style="border: 1px solid #1c84c6;">
+                                <h3 style="text-align: center;">Track Order</h3><br><br>
+                                <h5 style="text-align: center;">Order placed<p style="margin-top: 5px;">01/10/2002, 4:30
+                                        PM
+                                    </p>
+                                </h5>
+                                <h5 style="text-align: center; margin-top: 110px;">Food Point Accepted the Order<p
+                                        style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                </h5>
+                                <h5 style="text-align: center; margin-top: 110px;">Pickup schedule Date and time<p
+                                        style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                </h5>
+                                <h5 style="text-align: center; margin-top: 110px;">Order Picked Up date and time<p
+                                        style="margin-top: 5px;">01/10/2002, 4:30 PM</p>
+                                </h5>
+                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row"> -->
+                <!-- <div class="row mt-3 bg-white">
+                    <div class="col-lg-8 wrapper wrapper-content animated fadeInRight">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-5">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>User Details</h5>
+                                    </div>
+                                    <div class="ibox-content" style="border: 1px solid #1c84c6;">
+                                        <div class="row" href="">
+                                            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                                                <div class="text-center">
+                                                    <img alt="image" id="blah"
+                                                        src="https://www.w3schools.com/howto/img_avatar.png"
+                                                        style="height:116px; width:116px; border-radius: 50%; margin-right: 34px;">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" style="padding-left: 0px;">
+                                                <h4>Name: <span class="newtext" id="name"></span></h4>
+                                                <h4>Email ID: <span class="newtext" id="email"></span></h4>
+                                                <h4>Mobile: <span class="newtext" id="mobile"></span></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>Issues</h5>
+                                    </div>
+                                    <div class="ibox-content"
+                                        style="min-height: 178px; border: 1px solid #1c84c6; padding-right: 0px;">
+                                        <h4>Pending Issues: <span class="newtext" id="pendingIssue"></span></h4><br>
+                                        <h4>Resolved Issues: <span class="newtext" id="resolvedIssue"></span></h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>Order</h5>
+                                    </div>
+                                    <div class="ibox-content" style="min-height: 178px; border: 1px solid #1c84c6;">
+                                        <h4> Completed: <span class="newtext" id="order_complete"></span></h4><br>
+                                        <h4> Cancelled: <span class="newtext" id="order_pending"></span></h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="ibox" id="ibox1">
+                                    <div class="tabs-container">
+                                        <div class="tab-content">
+                                            <div id="tab-1" class="tab-pane active">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" id="classId">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><strong>Order ID<a
+                                                                                onclick="user_orderList(-1,'orderId')"><img
+                                                                                    src="../../../admin/assets/img/updownarrow .svg"></a></strong>
+                                                                    </th>
+                                                                    <th><strong>UserName</strong>
+                                                                    </th>
+                                                                    <th><strong>VendorName</strong></th>
+                                                                    <th><strong>Cost</strong></th>
+                                                                    <th><strong>Status</strong></th>
+                                                                    <th><strong>Order Date and Time</strong></th>
+                                                                    <th><strong>Pickup Date and Time</strong></th>
+                                                                    <th><strong>Amount Paid</strong></th>
+                                                                    <th><strong>Track Order</strong></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="table">
+                                                            </tbody>
+
+                                                        </table>
+                                                        <div class="box" id="page1">
+                                                            <ul id="example-1" class="pagination"></ul>
+                                                        </div>
+                                                        <div class="alert alert-primary hide" id="noData" role="alert">
+                                                            No data found
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wrapper wrapper-content animated fadeInRight col-lg-3 track_order_sidebar">
+                        <div class="ibox-content" style="border: 1px solid #1c84c6;">
+                            <h3 class="text-center" style="text-decoration: underline;">Track Order</h3><br><br>
+                            <section class="track_section">
+                                <div class="order-track" id="track">
+
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                </div> -->
+                <footer></footer>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="assets/js/inspinia.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('login');
+        }
+    </script>
+</body>
+
+</html>

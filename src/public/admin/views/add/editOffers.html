@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+    <!-- timezone bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- sweet alert library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+    <!-- jQuery library -->
+    <script src="../../../admin/assets/js/jquery.js"></script>
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../../admin/scripts/common/pipeline.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- js files -->
+    <script src="../../../admin/scripts/add/editOffers.js"></script>
+    <script src="../../../admin/scripts/dashboard.js"></script>
+
+    <script src="../../../admin/scripts/add/addOffers.js"></script>
+    <script src="../../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/common/validation.js"> </script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+
+</head>
+
+<style type="text/css">
+    .container {
+        margin: 100px auto;
+    }
+
+    .maxwidth {
+        width: 100%;
+        margin: auto;
+    }
+</style>
+
+<style>
+    .form-control1,
+    .single-line {
+        background-color: #64cfbb63;
+        background-image: none;
+        border: 3px solid #e377a37d;
+        border-radius: 13px;
+        color: inherit;
+        display: block;
+        padding: 10px 10px;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        width: 100%;
+    }
+
+    h4 {
+        font-weight: 500;
+        color: #676A6C;
+        font-size: 15px;
+        padding-top: 13px;
+        margin-bottom: 6px;
+        padding-left: 0px !important;
+    }
+
+    .newtext {
+        font-size: 13px;
+        color: #000;
+        font-weight: 600;
+        padding-top: 10px;
+    }
+
+    .imgDiv {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        float: left;
+        margin: 5px;
+    }
+
+    .imgDiv {
+        width: 100%;
+        height: 100%;
+    }
+
+    .container {
+        margin: 100px auto;
+    }
+
+
+    .addcoupen_cancel {
+        border: 1px solid #1ab394;
+        color: #1ab394;
+    }
+
+    input {
+        height: 50px !important;
+    }
+
+    .coupon_upload_img input {
+        position: absolute;
+        top: 28px;
+        opacity: 0 !important;
+        height: 100px !important;
+        width: 100px;
+        left: 15px;
+        z-index: -1;
+        cursor: pointer;
+    }
+
+    /* button.choices__button{
+        cursor: none !important;
+    } */
+    .choices.is-disabled .choices__button {
+        cursor: not-allowed;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .lastline {
+            margin: 0px !important;
+            display: inline-block !important;
+        }
+
+    }
+
+    input,
+    textarea {
+        border: 1px solid #5bc3db !important;
+    }
+
+    .input-group-addon {
+        border-top: 1px solid #5bc3db !important;
+        border-bottom: 1px solid #5bc3db !important;
+        border-left: 1px solid #5bc3db !important;
+    }
+
+    input.choices__input.choices__input--cloned {
+        border: none !important;
+    }
+
+    .offerManagementdata {
+        border: 3px solid #05a7cb;
+        padding: 20px;
+        background: white;
+    }
+</style>
+
+<script>
+    var jqOld = jQuery.noConflict();
+    jqOld(function () {
+        jqOld("#startDate").datepicker({
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
+    })
+</script>
+
+<script>
+    var jqOld = jQuery.noConflict();
+    jqOld(function () {
+        jqOld("#endDate").datepicker({
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
+    })
+</script>
+
+<script>
+    var jqOld = jQuery.noConflict();
+    jqOld(function () {
+        jqOld("#startDate").datepicker({
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
+    })
+</script>
+
+<script>
+    var jqOld = jQuery.noConflict();
+    jqOld(function () {
+        jqOld("#expiryDate").datepicker({
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
+    })
+</script>
+
+<body onload="offerDetail();storeType_list();">
+
+    <div id="wrapper" style="display: none;">
+        <navbar></navbar>
+
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn" href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to the Jroute Admin </span>
+                        </li>
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout 1.png"></a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="wrapper border-bottom white-bg page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>Offer Management</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:rgb(124, 124, 177)">
+                                <a href="/admin/offers"><strong>Offer Management </strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:rgb(124, 124, 177)">
+                                <strong>Edit Details</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <form id="editform" method="post" enctype="multipart/form-data" class="maxwidth" role="editform">
+                    <div class="ibox offerManagementdata ">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Store Type<span style="color: red;">&#42;</span></label>
+                                                <select class="form-control" id="storeTypeId" name="storeTypeId"
+                                                    onchange="store_list()" style="height: 55px;" autocomplete="off"
+                                                    required>
+                                                    <option disabled value="" hidden selected>Select</option>
+                                                    <input type="text" style="display: none;" name="storeTypeId1"
+                                                        id="storeTypeId1">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Title<span style="color: red;">&#42;</span></label>
+                                                <input type="text" oninput="validate(this)" class="form-control"
+                                                    id="title" name="title" placeholder="Enter Title (In English)"
+                                                    maxlength="50" required>
+                                            </div>
+                                            <div class="form-group" style="margin-top:40px;">
+                                                <input type="text" oninput="validate(this)" class="form-control"
+                                                    id="ar_title" name="ar_title" placeholder="Enter Title (In Arabic)"
+                                                    maxlength="50" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" id="UptoId">
+                                            <div class="form-group">
+                                                <label>Upto<span style="color: red;">&#42;</span></label>
+                                                <input type="text" oninput="isNumberKey1(this)" class="form-control"
+                                                    id="upto_Amount1" name="upto_Amount1" placeholder="Enter Amount"
+                                                    maxlength="15">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Minimum Amount<span style="color: red;">&#42;</span></label>
+                                                <input type="text" oninput="isNumberKey1(this)" class="form-control"
+                                                    id="minimum_amount" name="minimum_amount" placeholder="Enter Amount"
+                                                    maxlength="15" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group" id="data_1">
+                                                <label>Start Date<span style="color: red;">&#42;</span></label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                    <input type="startDate" class="form-control" id="startDate"
+                                                        name="startDate" autocomplete="off" required readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="row">
+                                        <div class="col-12" id="dynamic">
+                                            <div class="form-group" id="data_1">
+                                                <label>Select Stores<span style="color: red;">&#42;</span></label>
+                                                <select class="form-control" id="storeId" name="storeId"
+                                                    style="height: 55px;" multiple autocomplete="off" required>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Coupon Code<span style="color: red;">&#42;</span></label>
+                                                <input type="text" oninput="validate(this)" class="form-control"
+                                                    id="couponCode" name="couponCode" placeholder="Enter Coupon Code"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Offer Type<span style="color: red;">&#42;</span></label>
+                                                <select class="form-control" id="offer_type" name="offer_type"
+                                                    onchange="checkType()" style="height: 55px;" required
+                                                    autocomplete="off">
+                                                    <option disabled value="" hidden selected>Select</option>
+                                                    <option value="Percentage">Percentage</option>
+                                                    <option value="Flat">Flat</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Enter Amount or Percentage<span
+                                                        style="color: red;">&#42;</span></label>
+                                                <input type="text" oninput="isNumberKey(this)" class="form-control"
+                                                    id="offer_amount" name="offer_amount" placeholder="Enter Amount"
+                                                    maxlength="10" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group" id="data_1">
+                                                <label>Expiry Date<span style="color: red;">&#42;</span></label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                    <input type="endDate" class="form-control" id="expiryDate"
+                                                        name="expiryDate" autocomplete="off" required readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" oninput="validate(this)" rows="3"
+                                            id="description" name='description'
+                                            placeholder="Write Description here (In English)" maxlength="1000"
+                                            required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" oninput="validate(this)" rows="3"
+                                            id="ar_description" name='ar_description'
+                                            placeholder="Write Description here (In Arabic)" maxlength="1000"
+                                            required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Store Type*</label>
+                                            <select class="form-control" id="storeTypeId" name="storeTypeId"
+                                                style="height: 55px;" onclick="store_list();" autocomplete="off">
+                                                <option disabled value="" hidden selected>Select</option>
+                                                <input type="text" style="display: none;" name="storeTypeId1"
+                                                    id="storeTypeId1">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12" id="dynamic">
+                                        <div class="form-group" id="data_1">
+                                            <label>Select Stores*</label>
+                                            <select class="form-control" id="storeId" name="storeId"
+                                                style="height: 55px;" multiple autocomplete="off">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Title*</label>
+                                            <input type="text" oninput="validate(this)" class="form-control" id="title"
+                                                name="title" placeholder="Enter Title (In English)" maxlength="50" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" oninput="validate(this)" class="form-control"
+                                                id="ar_title" name="ar_title" placeholder="Enter Title (In Arabic)" maxlength="50"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Coupon Code*</label>
+                                            <input type="text" oninput="validate(this)" class="form-control"
+                                                id="couponCode" name="couponCode" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Upto*</label>
+                                            <input type="text" oninput="validate(this)" class="form-control"
+                                                id="upto_Amount" name="upto_Amount"
+                                                placeholder="Enter Title (In English)" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Offer Type*</label>
+                                            <select class="form-control" id="offer_type" name="offer_type"
+                                                style="height: 55px;" autocomplete="off">
+                                                <option disabled value="" hidden selected>Select</option>
+                                                <option value="Percentage">Percentage</option>
+                                                <option value="Flat">Flat</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Enter Amount or Percentage*</label>
+                                            <input type="text" oninput="validate(this)" class="form-control"
+                                                id="offer_amount" name="offer_amount" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group" id="data_1">
+                                            <label>Start Date*</label>
+                                            <div class="input-group date">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="startDate" class="form-control" id="startDate"
+                                                    name="startDate" autocomplete="off" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group" id="data_1">
+                                            <label>Expiry Date*</label>
+                                            <div class="input-group date">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="endDate" class="form-control" id="expiryDate"
+                                                    name="expiryDate" autocomplete="off" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea class="form-control" oninput="validate(this)" rows="3"
+                                                id="description" name='description'
+                                                placeholder="Write Description here (In English)" required
+                                                maxlength="120"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" oninput="validate(this)" rows="3"
+                                                id="ar_description" name='ar_description'
+                                                placeholder="Write Description here (In Arabic)" required
+                                                maxlength="120"></textarea>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12 coupon_upload_img">
+                                    <label>Upload image</label>
+                                    <div class="text-center" style="padding-right: 214px;">
+                                        <label id="image" style="cursor: pointer;">
+
+                                            <img alt="image" id="blah2" src="../../admin/assets/img/emptyphoto.png"
+                                                style="height:100px ; width:100px; margin-right: 97px; border-radius: 13px; margin-right: 161px;">
+                                            <input type='file' accept="image/*" name='image' id="blah2"
+                                                onchange="readURL1(this)">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group" style="display: none;">
+                                    <label for="email">id</label>
+                                    <input type="text" class="form-control" id=userId name="userId">
+                                </div> -->
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white addcoupen_cancel" data-dismiss="modal"
+                                    onclick="cancel();">Cancel</button>
+                                <button type="submit" class="btn btn-primary" value="submit" id="Submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer></footer>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="assets/js/inspinia.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('/login');
+        }
+
+        var currentLocation = window.location.href;
+        var url = new URL(currentLocation);
+        var userId = url.searchParams.get("id");
+        $("#editform").submit(function (e) {
+            var store = $('#storeId').val();
+            e.preventDefault();
+            if (document.getElementById('offer_type').value == "Percentage") {
+                if ((document.getElementById('upto_Amount1').value) && document.getElementById('upto_Amount1').value != null && document.getElementById('upto_Amount1').value != undefined) {
+                    var upto = document.getElementById('upto_Amount1').value
+                } else {
+                    alert("Please enter upto Amount")
+                    return
+                }
+            } else {
+                if (Number(document.getElementById('offer_amount').value) >= Number(document.getElementById('minimum_amount').value)) {
+                    alert("Minimum Amount should be greater than offer amount")
+                    return
+                } else {
+                    var upto = 0
+                }
+            }
+            if (store.length > 0) {
+                var startDate = document.getElementById('startDate').value
+                var expiryDate = document.getElementById('expiryDate').value
+                if (!startDate && !expiryDate) {
+                    alert("Please enter Date")
+                }
+                else if (startDate > expiryDate) {
+                    alert(" To Date should be after Start Date")
+                } else {
+                    var formData = new FormData(this);
+                    formData.append('storeIds', store)
+                    formData.append('upto_Amount', upto)
+                    $.ajax({
+                        url: `${host}/api/v1/admin/offer/edit/${userId}`,
+                        type: 'Put',
+                        data: formData,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', token);
+                        },
+                        contentType: false,
+                        processData: false,
+                    }).done(function (data) {
+                        // If successful
+                        window.location.replace('/admin/offers');
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        // If fail
+                        alert(jqXHR.responseJSON.error)
+                    })
+                }
+            } else {
+                alert('Please select stores')
+            }
+        });
+        function checkType() {
+            if (document.getElementById('offer_type').value == "Percentage") {
+                document.getElementById('UptoId').style.display = "block"
+            } else {
+                document.getElementById('UptoId').style.display = "none"
+            }
+        }
+        // function isNumberKey(evt) {
+        //     var charCode = (evt.which) ? evt.which : evt.keyCode
+        //     if (charCode > 31 && (charCode < 48 || charCode > 57))
+        //         return false;
+        //     return true;
+        // }
+        var validNumber = new RegExp(/^\d*\.?\d*$/);
+        var lastValid = document.getElementById("offer_amount").value;
+        function isNumberKey(elem) {
+            if (validNumber.test(elem.value)) {
+                lastValid = elem.value;
+            } else {
+                elem.value = lastValid;
+            }
+        }
+        var lastValid1 = document.getElementById("upto_Amount1").value;
+        function isNumberKey1(elem) {
+            if (validNumber.test(elem.value)) {
+                lastValid1 = elem.value;
+            } else {
+                elem.value = lastValid1;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

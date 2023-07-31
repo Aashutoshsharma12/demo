@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="pdf.css" />
+    <!-- <script src="pdf.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<!-- js files -->
+<script src="../../admin/scripts/pdf.js"></script>
+</head>
+<body onload="pdfDetails();">
+    <div class="container d-flex justify-content-center mt-50 mb-50">
+        <div class="row">
+            <!-- <div class="col-md-12 text-right mb-3">
+                <button class="btn btn-primary" id="download"> download pdf</button>
+            </div> -->
+            <div class="col-md-12">
+                <div class="card" id="invoice">
+                    <div class="card-header bg-transparent header-elements-inline">
+                        <h6 class="card-title text-primary">Invoice</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-4 ">
+                                    <div class="text-sm-left">
+                                        <h4 class="invoice-color mb-2 mt-md-2">Invoice <span id="orderId"></span></h4>
+                                        <ul class="list list-unstyled mb-0">
+                                            <li>Date: <span class="font-weight-semibold" id="currentDate"></span></li>
+                                            <li>Due date: <span class="font-weight-semibold" id="dueDate"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-4 ">
+                                    <div class="text-sm-right">
+                                        <ul class="list list-unstyled mb-0">
+                                            <li>Customer Name: <span class="font-weight-semibold" id="name"></span></li>
+                                          <li>Customer Email: <span class="font-weight-semibold" id="cus_email"></span></li>
+                                          <li>Customer Phone Number: <span class="font-weight-semibold" id="cus_phoneNumber"></span></li>
+                                          <li>Customer City: <span class="font-weight-semibold" id="city"></span></li>
+                                          <li>Customer State: <span class="font-weight-semibold" id="state"></span></li>
+                                          <li>Customer Country: <span class="font-weight-semibold" id="address"></span></li>
+        
+                                          </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="mb-4 mb-md-2 text-left"> <span class="text-muted">Invoice To:</span>
+                                <ul class="list list-unstyled mb-0">
+                                    <li>
+                                        <h5 class="my-2"><span id="vendor_ownerName"></span></h5>
+                                    </li>
+                                    <li><span class="font-weight-semibold" id="vendor_businessName"></span></li>
+                                    <li>Noida</li>
+                                    <li>India</li>
+                                    <li><span id="vendor_phoneNumber"></span></li>
+                                    <!-- <li><a href="#" data-abc="true">as12@gmail.com</a></li> -->
+                                </ul>
+                            </div>
+                            <!-- <div class="mb-2 ml-auto"> <span class="text-muted">Payment Details:</span>
+                                <div class="d-flex flex-wrap wmin-md-400">
+                                    <ul class="list list-unstyled mb-0 text-left">
+                                        <li>
+                                            <h5 class="my-2">Total Due:</h5>
+                                        </li>
+                                        <li>Bank name:</li>
+                                        <li>Country:</li>
+                                        <li>City:</li>
+                                        <li>Address:</li>
+                                       
+                                    </ul>
+                                    <ul class="list list-unstyled text-right mb-0 ml-auto">
+                                        <li>
+                                            <h5 class="font-weight-semibold my-2"><span id="totalAmount"></span></h5>
+                                        </li>
+                                        <li><span class="font-weight-semibold">Indian Bank</span></li>
+                                        <li>Indai</li>
+                                        <li>Noida</li>
+                                        <li>India Noida</li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="pt-2 mb-3 wmin-md-400 ml-auto">
+                                <h6 class="text-left">Total due</h6>
+                                <!-- <h6 class="text-right">(IN SAR)</h6> -->
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="text-left">Subtotal:</th>
+                                                <td class="text-right"><span id="subTotal"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-left">Tax: <span class="font-weight-normal" id="taxes_Charges"></span></th>
+                                                <td class="text-right"><span id="taxes_Charges_amount"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-left">Total:</th>
+                                                <td class="text-right text-primary">
+                                                    <h4 class="font-weight-semibold"><span id="totalAmount"></span></h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var token = localStorage.getItem("token");
+    var host = window.location.protocol + "//" + window.location.host;
+    if (!token) {
+        localStorage.removeItem("name");
+        localStorage.removeItem("token");
+        window.location.replace('login');
+    }
+
+</script>
+
+</html>

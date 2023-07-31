@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="moment.js"></script>
+
+    <script src="moment-timezone-with-data.js"></script>
+
+    <link rel="icon" href="../../admin/assets/img/favicon.png" type="image">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body onload="mainFunction()">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="loginPageiImg_Container">
+                <img src="../../../admin/assets/img/image 1.png">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="loginscreen animated fadeInDown loginPage">
+                <!-- <center> -->
+                <h2 class="text-center">Welcome Admin</h2>
+                <!-- </center> -->
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Username" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                </div>
+                <button class="btn btn-primary block full-width m-b" id="btnId" onclick="login()">Signin</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script>
+        var host = window.location.protocol + "//" + window.location.host;
+        function mainFunction() {
+            var token = localStorage.getItem("token");
+            if (token) {
+                window.location.replace('/admin/dashboard');
+            }
+        }
+
+        //******Search value by Enter**************/
+        $("#password").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#btnId").click();
+            }
+        });
+        //not allowed space
+        $(function () {
+            $('#password').on('keypress', function (e) {
+                if (e.which == 32) {
+                    return false;
+                }
+            });
+            $('#email').on('keypress', function (e) {
+                if (e.which == 32) {
+                    return false;
+                }
+            });
+        });
+
+    </script>
+    <script src="../../admin/scripts/auth/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Jroute</title>
+    <link rel="icon" href="../../admin/assets/img/trucklogo.png" type="image">
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/js/intlTelInput.js'></script>
+    <!--<link rel="stylesheet" href="dist/pagination.min.css">-->
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+    <!-- moment -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!-- js files -->
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/dashboard.js"></script>
+    <script src="../../admin/scripts/pdf.js"></script>
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css" />
+    <link rel="stylesheet" href="../../admin/assets/css/intlTelInput.css">
+    <link rel='stylesheet' type="text/css" href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/css/intlTelInput.css'>
+    <!-- for graph -->
+    <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script> -->
+    <!-- ggg -->
+    <script src="https://cdn.anychart.com/releases/8.0.0/js/anychart-base.min.js"></script>
+    <style type="text/css">
+        .container {
+            margin: 100px auto;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: red !important;
+            background-color: transparent !important;
+            border-bottom: 3px solid red !important;
+            border-radius: 0px !important;
+            height: 50px;
+        }
+
+        .tab_pills_container ul {
+            width: 100%;
+            overflow: auto;
+            display: flex;
+            white-space: nowrap;
+            flex-wrap: nowrap;
+        }
+
+        .tab_pills_container ul li a {
+            color: black !important;
+            font-size: 18px;
+        }
+
+        .tab_pills_container .card {
+            border: none;
+            /* border-top: 4px solid #e7eaec; */
+            border-radius: 0px;
+            border: 1px solid #e7eaec;
+            min-height: 48px;
+            /* background-image: linear-gradient(to top, #0ba360 50%, #3cba92 100%) !important; */
+            /* color: white; */
+
+            /* background-image: linear-gradient(to right, #4CB8C4 0%, #3CD3AD  51%, #4CB8C4  100%); */
+        }
+
+        .tab_pills_container .card h5 {
+
+            /* font-weight: 300;
+            font-size: 14px;
+            color: black !important;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px; */
+            /* background-color: #ffffff; */
+            border-bottom: 1px solid #e7eaec;
+            border-width: 1px;
+            color: white;
+            text-align: left;
+            margin-bottom: 0;
+            padding: 15px 10px 8px 15px;
+            min-height: 48px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .tab_pills_container .card h1 {
+            /* font-size: 30px;
+            color: #6c757d;
+            font-weight: lighter !important;
+            text-align: left;
+            padding: 0px 0px 0px 10px; */
+            /* background-color: #ffffff; */
+            color: inherit;
+            text-align: left;
+            padding: 15px 20px 20px 20px;
+            border-width: 1px;
+            font-size: 30px;
+        }
+
+        .card .dropdown button.dropdown-toggle {
+            background-color: white !important;
+            color: black !important;
+            font-weight: 400 !important;
+            border: 1px solid #82d3e5 !important;
+            font-size: 18px;
+            width: fit-content;
+        }
+
+        /* jddddddddddd */
+        .graph.container {
+            width: 100%;
+            height: 400%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* /////////////////////////Start Profit Section//////////////////////////////////// */
+        .profit_section .inner_container {
+            padding: 7px 0px 0px 10px;
+        }
+
+        .profit_section .inner_container {
+            border-bottom: 1px solid #ccc;
+            padding: 10px !important;
+        }
+
+        .profit_section .inner_container h1 {
+            color: inherit;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* /////////////////////////Start latest_recent/////////////////////////////////// */
+        .latest_recent .latest_order {
+            border-bottom: 1px solid #ccc;
+            padding: 3px 10px !important;
+        }
+
+        .latest_recent h1 {
+            color: inherit;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .latest_recent button {
+            background-color: black;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            /* min-width: 150px; */
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        .latest_recent button:hover {
+            background-color: black;
+            color: white;
+        }
+
+
+        /* //////////////////////////////////////order_chart_container////////////////////////////////// */
+        .order_chart_container .inner_container {
+            height: 300px;
+            padding-top: 10px;
+        }
+
+        .order_placed {
+            border-bottom: 1px solid #ccc;
+            padding: 10px !important;
+        }
+
+        /* kkkkkkkkkkkkkkkkkkk */
+
+        .orderPlacedHeading {
+            color: inherit;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+
+
+
+
+        .latest_recent .recent .card-body {
+            border-bottom: 2px solid #ccc;
+            padding: 20px 10px;
+        }
+
+        .latest_recent .recent ul {
+            list-style-type: none;
+            margin: 15px 0px;
+            padding-left: 15px;
+        }
+
+        .latest_recent .recent ul li {
+            display: flex;
+            align-items: center;
+        }
+
+        .latest_recent .recent ul li .rounded_img {
+            margin-right: 20px;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .modebar .modebar:hover {
+            display: none !important;
+        }
+
+        .latest_recent .recent ul li .rounded_img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .latest_recent .recent ul li h2 {
+            font-weight: 600;
+            color: inherit;
+            font-size: 14px;
+        }
+
+        p.data_update {
+            width: 43%;
+        }
+
+        .profit_chart_container {
+            padding: 10px 0px;
+        }
+
+        .profit_chart_container .progress {
+            margin-bottom: 33px;
+            height: 35px;
+            width: 100%;
+            background-color: white !important;
+        }
+
+        .profit_chart_container .progress h2 {
+            margin-top: 0px !important;
+            font-size: 16px;
+            font-weight: 300;
+            color: #23c6c8 !important;
+        }
+
+        .profit_chart_container .progress .red {
+            background-color: #1ab394;
+        }
+
+        .profit_chart_container .progress .blue {
+            background-color: #F25B09;
+        }
+
+        .profit_chart_container .progress .green {
+            background-color: #79A33D;
+        }
+
+        .profit_chart_container .progress .lightgreen {
+            background-color: #83ff08;
+        }
+
+        .profit_chart_container .progress .progress-bar {
+            animation-name: profitBar;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in;
+            animation-duration: .4s;
+        }
+
+        @keyframes profitBar {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .card h5 {
+            padding: 10px 0px 0px 10px;
+        }
+
+        .card p {
+            padding: 0px 0px 0px 10px;
+        }
+
+        .dashboard_container {
+            padding: 0px 30px !important;
+        }
+
+        @media screen and (max-width:575px) {
+            .tab_pills_container ul li a {
+                color: black !important;
+                font-size: 14px;
+            }
+
+            .latest_recent button {
+                background-color: black;
+                color: white;
+                font-weight: 800;
+                font-size: 12px;
+                min-width: 100px;
+                padding: 8px 10px;
+            }
+
+            /* .tab_pills_container .card h5 {
+                font-weight: 300;
+                font-size: 12px;
+                color: black !important;
+            } */
+
+            .tab_pills_container .card p {
+                font-size: 20px;
+                font-weight: lighter !important;
+            }
+
+            .dashboard_container {
+                padding: 0px 5px !important;
+            }
+        }
+    </style>
+</head>
+
+<body onload="checkPermission();dashboard();storeType_Profit();graphApi();">
+    <div id="wrapper" style="display: none;">
+        <navbar></navbar>
+        <div id="page-wrapper" class="container-fluid gray-bg ">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn " href="#"><i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to Jroute APP Admin </span>
+                        </li>
+
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout 1.png"></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="container-fluid dashboard_container">
+                <div class="row tab_pills_container">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="today" role="tabpanel"
+                                aria-labelledby="today-tab">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#128C3F;">Total Users</h5>
+                                            <h1 id="total_Customer"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#3896F1;">Active Users</h5>
+                                            <h1 id="active_Customer"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#9A1C6D;">Inactive Users</h5>
+                                            <h1 id="inactive_Customer"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#3896F1;">Total Vendors</h5>
+                                            <h1 id="total_Vendor"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#79A33D">Food Shop</h5>
+                                            <h1 id="total_FoodShop"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#F25B09">Grocery Shop</h5>
+                                            <h1 id="total_GroceryShop"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#79A33D">Meat Shop</h5>
+                                            <h1 id="total_MeatShop"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#03A076;">Total Store Types</h5>
+                                            <h1 id="total_Category"></h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#3BCCFF;">Total Categories</h5>
+                                            <h1 id="total_SubCategory"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#03A076;">Total Payment</h5>
+                                            <h1 id="total_Payment"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#11961C;">Total Orders</h5>
+                                            <h1 id="total_Orders"></h1>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                                        <div class="card">
+                                            <h5 style="background:#FC0D1B;">Cancelled Orders</h5>
+                                            <h1 id="total_CancelledOrders"></h1>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row chart_dig">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 mt-3">
+                        <div class="card orderPlacedCard">
+                            <div class="card-body d-flex align-items-center justify-content-between order_placed">
+                                <div>
+                                    <h1 class="orderPlacedHeading">Ordered placed Amount</h1>
+                                </div>
+                                <div>
+                                    <div class="dropdown text-center">
+                                        <div class="dropdown-item">
+                                            <select class="form-control" name="type_data" id="type_data"
+                                                onchange="graphApi();">
+                                                <option disabled value="" selected hidden>Yearly</option>
+                                                <option value="week">Weekly</option>
+                                                <option value="month">Monthly</option>
+                                                <option value="year">Yearly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order_chart_container px-5 graph">
+                                <!-- -------------Create Chart Here------------- -->
+                                <!-- <div id="chart-container"></div> -->
+                                <div class='inner_container' id="container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-3 profit_section">
+                        <div class="card profitSectionCard">
+                            <div class="inner_container d-flex align-items-center justify-content-between flex-wrap">
+                                <div>
+                                    <h1>Profits Section</h1>
+                                </div>
+                                <div>
+                                    <div class="dropdown text-center">
+                                        <div class="dropdown-item">
+                                            <select class="form-control" name="type" id="type"
+                                                onchange="storeType_Profit();">
+                                                <option disabled value="" selected hidden>Yearly</option>
+                                                <option value="today"> Today</option>
+                                                <option value="week">Weekly</option>
+                                                <option value="month">Monthly</option>
+                                                <option value="year">Yearly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profit_chart_container px-3" id="storeTypeId">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row latest_recent mb-5">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 mt-3">
+                        <div class="card latestOrderCard">
+                            <div
+                                class="card-body latest_order d-flex align-items-center justify-content-between flex-wrap">
+                                <div>
+                                    <h1>Latest Orders</h1>
+                                </div>
+                                <div class="text-center d-flex align-items-center justify-content-between flex-wrap">
+                                    <p class="data_update mr-4 mt-3">Data updated every 3 hours</p>
+                                    <button class="btn" id="orders" onclick="order();"> View All</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th><strong>Order ID</strong></th>
+                                            <th><strong>Date</strong></th>
+                                            <th><strong>Billing Name</strong></th>
+                                            <th><strong>Amount</strong><br></th>
+                                            <th><strong>Status</strong></th>
+                                            <th><strong>Invoice</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table">
+                                    </tbody>
+                                </table>
+                                <ul class="wait_for_latest_order">
+                                    <div id="classId1">
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-3 recent">
+                        <div class="card recentAcceptedVendorCard">
+                            <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+                                <div>
+                                    <h1>Recent Accepted Vendors</h1>
+                                </div>
+                                <div class="text-center d-flex align-items-center justify-content-between">
+                                    <button class="btn" id="vendorViews" onclick="venderList();"> View All</button>
+                                </div>
+                            </div>
+                            <ul>
+                                <div id="classId">
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    </div>
+    <!-- <footer></footer> -->
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../../admin/assets/js/inspinia.js"></script>
+    <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js'></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/js/intlTelInput.js'></script>
+
+
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('/login');
+        }
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            updateReason();
+        });
+
+        //******Search value by Enter**************/
+        $("#fog").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#btnId").click();
+            }
+        });
+        //graph
+        function graphApi() {
+            document.getElementById('container').textContent = ''
+            var type = document.getElementById('type_data').value
+            $.ajax({
+                url: `${host}/api/v1/admin/dashboard/graph_Api?type_data=${type}`,
+                type: 'get',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                    xhr.setRequestHeader('timezone', localStorage.getItem('timeZone'));
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                // If successful  
+                if (data.code == 200 && data.data.total.length != 0) {
+                    var array = []
+                    var array1 = []
+                    var obj = {}
+                    for (let i = 0; i < data.data.total.length; i++) {
+                        if (type == 'year') {
+                            obj = {
+                                x: moment(data.data.total[i][0], 'DD-MM-YYYY').format('MMM'),
+                                value: data.data.total[i][1],
+                                fill: "rgba(25, 170, 141, 1)"
+                            }
+                        } else if (type == 'month') {
+                            obj = {
+                                x: moment(data.data.total[i][0]).format('D MMM'),
+                                value: data.data.total[i][1],
+                                fill: "rgba(25, 170, 141, 1)"
+                            }
+                        } else if (type == 'week') {
+                            obj = {
+                                x: moment(data.data.total[i][0]).format('ddd'),
+                                value: data.data.total[i][1],
+                                fill: "rgba(25, 170, 141, 1)"
+                            }
+                        } else {
+                            obj = {
+                                x: moment(data.data.total[i][0], 'DD-MM-YYYY').format('MMM'),
+                                value: data.data.total[i][1],
+                                fill: "rgba(25, 170, 141, 1)"
+                            }
+                        }
+                        array.push(obj)
+                    }
+                    anychart.onDocumentReady(function () {
+                        // create the chart
+                        var chart = anychart.column();
+                        // add data
+                        chart.data(array);
+                        chart.yAxis().title('(Revenue in SAR)');
+                        var yScale = chart.yScale();
+                        yScale.minimum(0)
+                        // draw
+                        chart.container("container");
+                        chart.draw();
+                    });
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                // If fail
+                alert(jqXHR.responseJSON.error)
+            })
+        }
+        // var trace1 = {
+        //     x: array,
+        //     y: array1,
+        //     type: 'bar',
+        //     marker: {
+        //         color: 'rgba(25, 170, 141, 1)',
+        //         opacity: 0.7,
+        //     }
+        // };
+        // var data = [trace1];
+        // console.log(data, "data")
+        // var layout = {
+        //     // autosize: false,
+        //     //   width: 900,
+        //     //   height: 600,
+        //     //   margin: {
+        //     //     l: 50,
+        //     //     r: 50,
+        //     //     b: 100,
+        //     //     t: 100,
+        //     //     pad: 4
+        //     //   },
+        //     xaxis: {
+        //         tickangle: -45,
+        //     },
+        //     yaxis: {
+        //         title: '(IN SAR)',
+        //         // title: "Units",
+        //         titlefont: { size: 30 },
+        //         // titleFontSize: 21,
+        //         includeZero: true
+        //     },
+        //     barmode: 'group'
+        // };
+        // // Plotly.newPlot('chart-container', data, layout);
+
+    </script>
+</body>
+
+</html>

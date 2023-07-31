@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Jroute</title>
+    <link rel="icon" href="../../admin/assets/img/trucklogo.png" type="image">
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+
+    <!--<link rel="stylesheet" href="dist/pagination.min.css">-->
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <script src="../../admin/scripts/common/validation.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- js files -->
+    <script src="../../admin/scripts/add/vendorView.js"></script>
+    <script src="../../admin/scripts/add/editVendor.js"></script>
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/dashboard.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+    <link rel='stylesheet' type="text/css" href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/css/intlTelInput.css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .container {
+            margin: 100px auto;
+        }
+
+
+        .innerSec {
+            border: 1px solid #1AB394;
+            padding: 10px;
+        }
+
+        .vendor_cancel {
+            color: #1AB394;
+            border: 1px solid #1AB394;
+        }
+
+        .vendor_cancel:hover {
+            color: #1AB394;
+            border: 1px solid #1AB394;
+        }
+
+        .form-control,
+        .single-line {
+            border: 1px solid #1AB394;
+            border-radius: 7px;
+        }
+
+        .breadcrumb {
+            padding: 6px;
+            margin-bottom: 0;
+            background-color: #e9ecef;
+            margin-top: 22px;
+            box-shadow: 0px 5px 4px 0px #ccc;
+
+        }
+
+        input,
+        select {
+            height: 50px !important;
+        }
+
+        /* stars */
+        span.stars,
+        span.stars span {
+            display: block;
+            background: url(assets/img/yellowStar.svg) 0 -16px repeat-x;
+            width: 80px;
+            height: 16px;
+        }
+
+        span.stars span {
+            background-position: 0 0;
+        }
+
+        /* **************gff */
+
+        input.storeImage_file {
+            position: absolute;
+            top: 35px;
+            height: 100px !important;
+            width: 100px;
+            left: 15px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        h5 {
+            font-weight: 900 !important;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .lastline {
+                margin: 0px !important;
+                width: 100% !important;
+                display: inline-block !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body onload="details();">
+    <div id="wrapper">
+        <navbar></navbar>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn " href="#"><i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to Jroute APP Admin </span>
+                        </li>
+
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout .png"></a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="wrapper border-bottom white-bg page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>Vendor Management</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:rgb(124, 124, 177)">
+                                <a href="/admin/orderManagement"><strong>Order Management </strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:rgb(124, 124, 177)">
+                                <strong>Detail Order</strong>
+                            </li>
+                        </ol>
+                        <button type="button" style="height: 36px; width: 170px; margin-top: 23px; background-color:#1AB394;
+                        box-shadow: 0px 5px 4px 0px #ccc;" class="btn btn-primary btn-success"
+                            onclick="vendor_category();"><i aria-hidden="true"></i><span
+                                style="font-weight: 700; padding-left: 10px;" data-toggle="modal"
+                                data-target="#myModal5">Category</span></button>
+                        <button type="button" id="buttn" class="btn btn-primary btn-success"
+                            style="display: none;"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div>
+                    <form id="form" method="post" enctype="multipart/form-data" class="maxwidth" role="form">
+                        <div class="ibox ">
+                            <div class="ibox-content vendor_review_page">
+                                <form>
+                                    <div class="innerSec vendor_sec_inner">
+                                        <div class="row">
+                                            <div class="col-sm-6 mt-4">
+                                                <div class="card vendor_view">
+                                                    <div
+                                                        class="vendor_info d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <h4>Vendor Info</h4>
+                                                            <img id="blah" src="../../admin/assets/img/emptyphoto.png"
+                                                                alt="" style="width:100px; height:100px; "><br>
+                                                        </div>
+                                                        <div>
+                                                            <b><span id=stars></span></b>
+                                                            <h2 class="Rating5"><span id="rating"></span></h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body shop_table">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="t_head" scope="col">Shop Name</th>
+                                                                    <th class="t_head" scope="col">Owner Name</th>
+                                                                    <th class="t_head" scope="col">Mobile No.</th>
+                                                                    <th class="t_head" scope="col">Category</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th><span id="shopName"></span></th>
+                                                                    <td><span id="ownerName"></span></td>
+                                                                    <td><span id="phoneNumber"></span></td>
+                                                                    <td><span id="storeType"></span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 mt-4">
+                                                <div class="card vendor_view">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Address of the shop</h5>
+                                                        <div class="address_shop">
+                                                            <ul>
+                                                                <li>
+                                                                    <h3>Address</h3>
+                                                                    <p id="fullAddress"></p>
+                                                                </li>
+                                                                <li>
+                                                                    <h3>City</h3>
+                                                                    <p id="city"></p>
+                                                                </li>
+                                                                <li>
+                                                                    <h3>State</h3>
+                                                                    <p id="state"></p>
+                                                                </li>
+                                                                <li>
+                                                                    <h3>Country</h3>
+                                                                    <p id="country"></p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col-6 col-sm-6 col-md-3 col-lg-3 mt-4">
+                                                <div class="card view_orders">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">All Orders</h5>
+                                                        <p class="card-text" id="totalOrder"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-6 col-sm-6 col-md-3 col-lg-3 mt-4">
+                                                <div class="card view_orders">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Completed</h5>
+                                                        <p class="card-text" id="completeOrder"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-6 col-sm-6 col-md-3 col-lg-3 mt-4">
+                                                <div class="card view_orders">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">In Progress</h5>
+                                                        <p class="card-text" id="InProgress"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-6 col-sm-6 col-md-3 col-lg-3 mt-4">
+                                                <div class="card view_orders">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Cancelled</h5>
+                                                        <p class="card-text" id="cancelled"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-7 mt-4">
+                                                <div class="card rating_product">
+                                                    <div class="card-body rating_reviews">
+                                                        <h5 class="card-title">Ratings and Reviews</h5>
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="rating_review_data" scope="col">S.No
+                                                                    </th>
+                                                                    <th class="rating_review_data" scope="col">
+                                                                        Username
+                                                                    </th>
+                                                                    <th class="rating_review_data" scope="col">
+                                                                        Reviews
+                                                                    </th>
+                                                                    <th class="rating_review_data" scope="col">
+                                                                        Ratings
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="table">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="alert alert-primary hide" style="width: 100%"
+                                                        id="noData" role="alert">
+                                                        No data found
+                                                    </div>
+                                                </div>
+                                                <div class="box" id="page1">
+                                                    <ul id="example-1" class="pagination"></ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 mt-4">
+                                                <div class="card rating_product">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Product Sold %</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Mainly scripts -->
+        <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+        <script src="../../admin/assets/js/popper.min.js"></script>
+        <script src="../../admin/assets/js/bootstrap.js"></script>
+        <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Peity -->
+        <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="../../admin/assets/js/inspinia.js"></script>
+        <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+
+        <!-- iCheck -->
+        <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+
+        <!-- Peity -->
+        <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+        <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+        <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+        <script
+            src='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/js/intlTelInput.js'></script>
+
+        <script>
+            var token = localStorage.getItem("token");
+            var host = window.location.protocol + "//" + window.location.host;
+            if (!token) {
+                localStorage.removeItem("name");
+                localStorage.removeItem("token");
+                window.location.replace('/login');
+            }
+
+        </script>
+
+</body>
+
+</html>

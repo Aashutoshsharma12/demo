@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+    <link rel="icon" href="../../admin/assets/img/trucklogo.png" type="image">
+
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+
+    <!--<link rel="stylesheet" href="dist/pagination.min.css">-->
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <script src="../../admin/scripts/common/validation.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
+    <script src="../../admin/scripts/add/addSub_admin.js"></script>
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/dashboard.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css" />
+    <link rel="stylesheet" href="../css/intlTelInput.css">
+    <link rel='stylesheet' type="text/css" href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css'>
+    <link rel='stylesheet' type="text/css"
+        href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/css/intlTelInput.css'>
+
+    <script src="https://unpkg.com/libphonenumber-js/bundle/libphonenumber-js.min.js"></script>
+
+
+    <style type="text/css">
+        .container {
+            margin: 100px auto;
+        }
+
+        .innerSec {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .form-control,
+        .single-line {
+            border: 1px solid #5bc3db;
+            border-radius: 7px;
+            height: 50px;
+        }
+
+        .checkboxArea {
+            margin-bottom: 0;
+            /* background-color: #e9ecef; */
+            padding: 13px 13px 0;
+            margin-top: 22px;
+            border-radius: 10px;
+            box-shadow: 0px 3px 10px 3px #ccc;
+        }
+
+        .checkHeading {
+            display: inline-block;
+        }
+
+        .modal-footer a button.cancel {
+            color: #1ab394;
+            border: 1px solid #1ab394;
+        }
+
+        .sub_admin_cancel {
+            color: #1ab394;
+            border: 1px solid #1ab394;
+        }
+
+        .addSubAdminContainer {
+            background-color: white;
+            padding: 20px 20px;
+            border: 3px solid #05a7cb;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .lastline {
+                margin: 0px !important;
+                width: 100% !important;
+                display: inline-block !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body onload="checkPermission();classActive();">
+    <div id="wrapper">
+        <navbar></navbar>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn " href="#"><i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to Jroute APP Admin </span>
+                        </li>
+
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout .png"></a></li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="wrapper border-bottom white-bg page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>Sub Admin Management</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:skyblue">
+                                <a href="sub_admin"><strong>Sub Admin </strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:skyblue">
+                                <strong>Add Sub Admin</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <form id="form" method="post" enctype="multipart/form-data" class="maxwidth" role="form">
+                    <div class="ibox addSubAdminContainer">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <h4>Name <span style="color: red;">&#42;</span>
+                                    </h4>
+                                    <input type="text" oninput="validate(this)" placeholder="Enter Name (In English)"
+                                        class="form-control" id="name" name="name" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group">
+                                    <h4>Email<span style="color: red;">&#42;</span></h4>
+                                    <input type="text" oninput="validate(this)" placeholder="Enter Email (In English)"
+                                        class="form-control" id="email" name="email" required>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <h4>Mobile Number<span style="color: red;">&#42;</span></h4>
+                                <div class="row ml-0">
+                                    <div class="col-12 d-flex tell-code pl-1">
+                                        <input type="tel" id="phoneCountryCode" name="phoneCountryCode"
+                                            class="form-control mobile flagInput" placeholder="+1" required />
+                                        <input type="text" id="phoneNumber" name="phoneNumber"
+                                            class="form-control flagPhone" placeholder="Enter Phone Number"
+                                            minlength="3" maxlength="100" required>
+                                        <span id="numberError" style="color: red;"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group">
+                                    <h4>Password<span style="color: red;">&#42;</span></h4>
+                                    <input type="text" oninput="validate(this)" class="form-control"
+                                        placeholder="Enter Password" id="password" name="password" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group">
+                                    <h4>Confirm Password<span style="color: red;">&#42;</span></h4>
+                                    <input type="text" oninput="validate(this)" class="form-control"
+                                        placeholder="Enter Confirm Password" id="confirmPassword" name="confirmPassword"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group">
+                                    <h4>Status<span style="color: red;">&#42;</span></h4>
+                                    <select class="form-control" name="isActive" id="isActive" required>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class=" col-12 mt-5">
+                                <h4>Permission<span style="color: red;">&#42;</span></h4>
+                                <div class="checkboxArea">
+                                    <div class="row w-100">
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c1" name="c1" value="Dashboard">
+                                                <h4 class="checkHeading"> Dashboard </h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c2" name="c2" value="User Management">
+                                                <h4 class="checkHeading"> User Management </h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c3" name="c3" value="Vendor Management">
+                                                <h4 class="checkHeading"> Vendor Management </h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c4" name="c4" value="Category Management">
+                                                <h4 class="checkHeading">Category Management </h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c5" name="c5" value="Notification">
+                                                <h4 class="checkHeading"> Notification </h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c6" name="c6" value="Admin Setting">
+                                                <h4 class="checkHeading"> Admin Setting </h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 ">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="c7" name="c7" value="Payment Management">
+                                                <h4 class="checkHeading">Payment Management </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/admin/sub_admin"><button type="button"
+                                    class="btn btn-white block half-width m-b cancel"
+                                    data-dismiss="modal">Cancel</button></a>
+                            <a href="/Submit"><button
+                                    class="btn btn-primary block half-width m-b submit">Submit</button></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../../admin/assets/js/inspinia.js"></script>
+    <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.2/js/intlTelInput.js'></script>
+
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('/login');
+        }
+        function mobileNoselect() {
+            if ($('#form').length) {
+                $(".mobile").intlTelInput();
+                $(".mobile").intlTelInput("setNumber", "+91");
+            };
+        };
+        //* Select js
+        function nice_Select() {
+            if ($('.product_select').length) {
+                $('select').niceSelect();
+            };
+        };
+        // Function Calls* 
+        // verificationForm ();
+        mobileNoselect();
+        nice_Select();
+        $("#form").submit(function (e) {
+            e.preventDefault();
+        })
+        //not allowed space
+        $(function () {
+            $('#password').on('keypress', function (e) {
+                if (e.which == 32) {
+                    return false;
+                }
+            });
+            $('#confirmPassword').on('keypress', function (e) {
+                if (e.which == 32) {
+                    return false;
+                }
+            });
+            $('#email').on('keypress', function (e) {
+                if (e.which == 32) {
+                    return false;
+                }
+            });
+        });
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            var number_withcounrtCode = document.getElementById('phoneCountryCode').value + "" + document.getElementById('phoneNumber').value
+            var email = document.getElementById('email').value
+            if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) == true) {
+                if ((document.getElementById('phoneNumber').value).length > 3) {
+                    if (libphonenumber.parsePhoneNumber(number_withcounrtCode).isValid() == true) {
+                        var password = document.getElementById('password').value
+                        let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+                        if (passwordRegex.test(password)) {
+                            if (password == document.getElementById('confirmPassword').value) {
+                                if (document.getElementById("c1").checked) {
+                                    var c1 = document.getElementById("c1").value
+                                } else {
+                                    var c1 = null
+                                }
+                                if (document.getElementById("c2").checked) {
+                                    var c2 = document.getElementById("c2").value
+                                } else {
+                                    var c2 = null
+                                }
+                                if (document.getElementById("c3").checked) {
+                                    var c3 = document.getElementById("c3").value
+                                } else {
+                                    var c3 = null
+                                }
+                                if (document.getElementById("c4").checked) {
+                                    var c4 = document.getElementById("c4").value
+                                } else {
+                                    var c4 = null
+                                }
+                                if (document.getElementById("c5").checked) {
+                                    var c5 = document.getElementById("c5").value
+                                } else {
+                                    var c5 = null
+                                }
+                                if (document.getElementById("c6").checked) {
+                                    var c6 = document.getElementById("c6").value
+                                } else {
+                                    var c6 = null
+                                }
+                                if (document.getElementById("c7").checked) {
+                                    var c7 = document.getElementById("c7").value
+                                } else {
+                                    var c7 = null
+                                }
+                                var array = [c1, c2, c3, c4, c5, c6, c7]
+                                var array1 = []
+                                for (let i = 0; i < array.length; i++) {
+                                    if (array[i] != null) {
+                                        array1.push(array[i])
+                                    }
+                                }
+                                if (array.length != 0) {
+                                    var obj = {
+                                        name: document.getElementById("name").value,
+                                        email: document.getElementById("email").value,
+                                        countryCode: document.getElementById('phoneCountryCode').value,
+                                        phoneNumber: document.getElementById("phoneNumber").value,
+                                        password: document.getElementById("password").value,
+                                        confirmPassword: document.getElementById("confirmPassword").value,
+                                        isActive: document.getElementById("isActive").value,
+                                        permission: array1,
+                                    }
+                                    $.ajax({
+                                        url: `${host}/api/v1/admin/sub_Admin/add_subAdmin`,
+                                        type: 'Post',
+                                        data: obj,
+                                        beforeSend: function (xhr) {
+                                            xhr.setRequestHeader('Authorization', token);
+                                        },
+                                    }).done(function (data) {
+                                        window.location.replace('/admin/sub_admin')
+                                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                                        // If fail
+                                        alert(jqXHR.responseJSON.error)
+                                    })
+                                } else {
+                                    alert("Please select Permission type")
+                                }
+                            } else {
+                                alert('Confirm Passwod should be same as New Password')
+                            }
+                        } else {
+                            alert("Password must be more than 8 characters with 1 uppercase,1number & 1 symbol.")
+                        }
+                    } else {
+                        alert('Invalid Phone Number Please enter valid Phone Number')
+                    }
+                } else {
+                    alert('Invalid Phone Number Please enter valid Phone Number')
+                }
+            } else {
+                alert("Please Enter Valid Email")
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

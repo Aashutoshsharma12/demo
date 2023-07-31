@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .center {
+            margin: auto;
+            width: 60%;
+            /* border: 3px solid #73AD21; */
+            padding: 10px;
+        }
+    </style>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin |Jroute </title>
+    <link href="assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+
+    <script src="../../admin/scripts/setting/app_version.js"></script>
+    <script src="../../../admin/scripts/dashboard.js"></script>
+    <script src="../../../admin/scripts/common/pipeline.js"></script>
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+
+</head>
+
+<body onload="checkPermission();classActive();getDetails();press1();">
+
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element" style="text-align: center;">
+                            <img alt="image" class="" style="height:81px; width:81px; border-radius: 50%;"
+                                src="https://www.w3schools.com/howto/img_avatar.png">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold"> Jroute Admin</span>
+                            </a>
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    <li id="dashboard-nav">
+                        <a href="/admin/dashboard"><i class="fa fa-th-large"></i> <span
+                                class="nav-label">Dashboard</span></a>
+                    </li>
+                    <li id="user-nav">
+                        <a href="/admin/user"><i class="fa fa-user"></i> <span class="nav-label">User
+                                Management</span></a>
+                    </li>
+                    <li id="vendor-nav">
+                        <a href="/admin/vendor_list"><i class="fa fa-user"></i> <span class="nav-label">Vendor
+                                Management</span></a>
+                    </li>
+                    <li id="category-nav">
+                        <a href="/admin/category"><i class="fa fa-users"></i> <span class="nav-label">Store
+                                Type</span></a>
+                    </li>
+                    <!-- <li id="cuisine_category-nav">
+                        <a href="/admin/cuisine_category" style="display: flex;"><i class="fa fa-user"></i> <span class="nav-label">Cuisine Category Management</span></a>
+                    </li> -->
+                    <li id="order-nav">
+                        <a href="/admin/orderManagement"><i class="fa fa-shopping-cart"></i> <span
+                                class="nav-label">Order Management</span></a>
+                    </li>
+                    <li id="parking-nav">
+                        <a href="/admin/parking"><i class="fa fa-user"></i> <span class="nav-label">Parking Management</span></a>
+                    </li>
+                    <li id="notification-nav">
+                        <a href="/admin/notification"><i class="fa fa-bell"></i> <span
+                                class="nav-label">Notification</span></a>
+                    </li>
+                    <li id="coupon-nav">
+                        <a href="/admin/offers"><i class="fa fa-gift"></i> <span class="nav-label">Offer
+                                Management</span></a>
+                    </li>
+                    <li id="payment-nav">
+                        <a href="/admin/payment"><i class="fa fa-inr"></i> <span class="nav-label">Payment
+                                Management</span></a>
+                    </li>
+                    <li id="sub_admin-nav">
+                        <a href="/admin/sub_admin"><i class="fa fa-user"></i> <span class="nav-label">Sub-Admin
+                                Management</span></a>
+                    </li>
+                    <li id="queries-nav">
+                        <a href="/admin/queries"><i class="fa fa-question-circle"></i> <span class="nav-label">Queries
+                                Management</span></a>
+                    </li>
+                    <li id="faq-nav">
+                        <a href="/admin/faq_list"><i class="fa fa-info-circle"></i> <span class="nav-label">Faq
+                                Management</span></a>
+                    </li>
+                    <li id="admin_setting-nav" class="active">
+                        <a href="#" onclick="press1();"><i class="fa fa-cogs"></i> <span class="nav-label">Admin
+                                Settings</span><span class="fa arrow"></span></a>
+                        <ul id="drop_down" class="nav nav-second-level">
+                            <li id="app-nav" class="active"><a href="/admin/version">App Version</a></li>
+                            <li id="setting-nav"><a href="/admin/changepassword">Change Password</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <!-- <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a> -->
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to the Jroute Admin </span>
+                        </li>
+
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets/img/logout 1.png"> </a></li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="wrapper border-bottom white-bg page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>Application Setting</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <ol class="breadcrumb" style="width: 405px;">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:skyblue">
+                                <strong>Application Setting</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox " style="width:100%">
+                            <div class="panel panel-primary " style="width:100%">
+                                <div class="panel-heading">
+                                    <h3 style="color: white;">Application Setting</h3>
+                                </div>
+                                <div class="ibox-content1111 appdetails">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h4>Android User App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="User Android App Url" id="andriodUserAppUrl"
+                                                    name="andriodUserAppUrl" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Android User Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="User Android Version" id="andriodUserVersion"
+                                                    name="andriodUserVersion" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Android User Update Type</h4>
+                                            <select class="form-control" name="andriodUserUpdate"
+                                                id="andriodUserUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Ios User App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="User Ios App Url"
+                                                    id="iosUserAppUrl" name="iosUserAppUrl" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h4>Ios User Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="User Ios Version"
+                                                    id="iosUserVersion" name="iosUserVersion" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Ios User Update Type</h4>
+                                            <select class="form-control" name="iosUserUpdate"
+                                                id="iosUserUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Android Vendor App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Vendor Android App Url" id="andriodVendorAppUrl"
+                                                    name="andriodVendorAppUrl" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h4>Android Vendor Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Vendor Android Version" id="andriodVendorVersion"
+                                                    name="andriodVendorVersion" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Android Vendor Update Type</h4>
+                                            <select class="form-control" name="andriodVendorUpdate"
+                                                id="andriodVendorUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Ios Vendor App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Vendor Ios App Url"
+                                                    id="iosVendorAppUrl" name="iosVendorAppUrl" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h4>Ios Vendor Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Vendor Ios Version"
+                                                    id="iosVendorVersion" name="iosVendorVersion" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Ios Vendor Update Type</h4>
+                                            <select class="form-control" name="iosVendorUpdate"
+                                                id="iosVendorUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Android Door Keeper App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Door Keeper Android App Url"
+                                                    id="andriodDoorKeeperAppUrl" name="andriodDoorKeeperAppUrl"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h4>Android Door Keeper Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Door Keeper Android Version"
+                                                    id="andriodDoorKeeperVersion" name="andriodDoorKeeperVersion"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Android Driver Update Type</h4>
+                                            <select class="form-control"
+                                                name="andriodDoorKeeperUpdate" id="andriodDoorKeeperUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Ios Door Keper App Url</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Door Keeper Ios App Url" id="iosDoorKeeperAppUrl"
+                                                    name="iosDoorKeeperAppUrl" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h4>Ios Door Keper Version</h4>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Door Keeper Ios Version" id="iosDoorKeeperVersion"
+                                                    name="iosDoorKeeperVersion" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4>Ios Driver Update Type</h4>
+                                            <select class="form-control" name="iosDoorKeeperUpdate"
+                                                id="iosDoorKeeperUpdate" onchange="">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Force">Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class=" col-lg-6 text-right">
+                                        <button class="btn btn-primary block half-width m-b"
+                                            onclick="update()">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer></footer>
+                    <!-- Mainly scripts -->
+                    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+                    <script src="../../admin/assets/js/popper.min.js"></script>
+                    <script src="../../admin/assets/js/bootstrap.js"></script>
+                    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+                    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+                    <!-- Peity -->
+                    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+                    <!-- Custom and plugin javascript -->
+                    <script src="../../admin/assets/js/inspinia.js"></script>
+                    <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+                    <!-- iCheck -->
+                    <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+                    <!-- Peity -->
+                    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+                    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+                    <script>
+                        var host = window.location.protocol + "//" + window.location.host;
+                        var token = localStorage.getItem("token")
+                        if (!token) {
+                            localStorage.removeItem("name");
+                            localStorage.removeItem("token");
+                            window.location.replace('/login');
+                        }
+                    </script>
+
+</body>
+
+</html>

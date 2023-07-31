@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../admin/scripts/dashboard.js"></script>
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #FFFFFF;
+        }
+
+        .noConnection_container {
+            margin-top: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inner {
+            text-align: center;
+        }
+
+        .inner h3 {
+            font-size: 25px;
+        }
+
+        .inner button {
+            font-size: 14px;
+            background-color: #ccc;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body onload="reload();">
+    <div class="noConnection_container">
+        <div class="inner">
+            <h3>Check your connection and try again</h3>
+            <button onclick="reload();">Retry</button>
+        </div>
+    </div>
+</body>
+<script>
+    window.addEventListener("online", function () {
+        window.location.replace(localStorage.getItem("currentscreenUrl"))
+    });
+</script>
+
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Jroute</title>
+    <link rel="icon" href="../../admin/assets/img/trucklogo.png" type="image">
+
+    <link rel="stylesheet" href="../../admin/assets/paginate/bs-pagination.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="../../admin/assets/paginate/pagination.min.js"></script>
+
+    <!--<link rel="stylesheet" href="dist/pagination.min.css">-->
+    <link href="../../admin//assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../admin/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../admin/assets/css/animate.css" rel="stylesheet">
+    <link href="../../admin/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../admin/assets/paginate/pagination.min.css">
+
+
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="../../admin/scripts/common/pipeline.js"></script>
+    <script src="../../admin/scripts/common/validation.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
+    <script src="../../admin/scripts/add/addSub_category.js"></script>
+    <script src="../../admin/scripts/auth/logout.js"></script>
+    <script src="../../admin/scripts/dashboard.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+    <script src="../../admin/scripts/index/index.js"></script>
+    <style type="text/css">
+        .container {
+            margin: 100px auto;
+        }
+
+        .innerSec {
+            border: 1px solid #1AB394;
+            padding: 10px;
+        }
+
+        .form-control,
+        .single-line {
+            border: 1px solid #1AB394;
+            border-radius: 7px;
+            /* margin-bottom: 3rem; */
+        }
+
+        input,
+        select {
+            height: 50px !important;
+        }
+
+        button.add_cat_cancel {
+            border: 1px solid #1AB394;
+            color: #1AB394;
+
+        }
+
+        input.add_cat_file {
+            position: absolute;
+            top: 8px;
+            width: 140px;
+            height: 125px !important;
+            left: 15px;
+            opacity: 0;
+            z-index: -1;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .lastline {
+                margin: 0px !important;
+                width: 100% !important;
+                display: inline-block !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body onload="checkPermission();category();">
+    <div id="wrapper">
+        <navbar></navbar>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 menuBtn" href="#"><i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to Jroute APP Admin </span>
+                        </li>
+
+                        <li><a class="dropdown-item" onclick="logout()">Logout <img
+                                    src="../../../admin/assets//img/logout .png"></a></li>
+                    </ul>
+
+                </nav>
+            </div>
+
+            <div class="wrapper border-bottom white-bg page-heading">
+                <div class="pageheading">
+                    <div class=" mr-4 mt-3">
+                        <h2><strong>Category Management</strong></h2>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard">
+                                    <div class="col-lg-6"> <strong>Home</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:skyblue">
+                                <a href="category"><strong>Store Type</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" style="color:skyblue">
+                                <a href="sub_category"><strong>Category</strong>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="color:skyblue">
+                                <strong>Add Category</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div>
+                    <form id="form" method="post" enctype="multipart/form-data" class="maxwidth" role="form">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form>
+                                    <div class="innerSec">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4>Select Store Type</h4>
+                                                    <select class="form-control" id="storeTypeId" name='storeTypeId'
+                                                        placeholder="Enter Vehicle Type Title" maxlength="30" required>
+                                                        <option disabled value="" hidden selected>Select</option>
+                                                        <input type="text" class="categoryId" style="display: none;"
+                                                            name="storeTypeId1" id="storeTypeId1">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <h4>Category Name</h4>
+                                                    <input type="text" oninput="validate(this)" class="form-control"
+                                                        id="title" name='title'
+                                                        placeholder="Enter Category Name in (English)" maxlength="30"
+                                                        required>
+                                                    <h6 style="text-align: right;">30 Characters Max</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="text" oninput="validate(this)" class="form-control"
+                                                        id="ar_title" name='ar_title'
+                                                        placeholder="Enter Category Name in (Arabic)" maxlength="30"
+                                                        required>
+                                                    <h6 style="text-align: right;">30 Characters Max</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-7 col-12 form-group">
+                                                <label id="image" style="cursor: pointer;">
+                                                    <img id="blah1" src="../../admin/assets/img/emptyphoto.png" alt=""
+                                                        style="width:150px; height:150px;border-radius: 23px;">
+                                                    <input class="add_cat_file" type='file' accept="image/*"
+                                                        name='image' id="image" onchange="readURL1(this)">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/admin/sub_category"><button type="button"
+                                                class="btn btn-white block half-width m-b add_cat_cancel"
+                                                data-dismiss="modal">Cancel</button></a>
+                                        <a href="/Submit"><button
+                                                class="btn btn-primary block half-width m-b">Submit</button></a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="../../admin/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="../../admin/assets/js/popper.min.js"></script>
+    <script src="../../admin/assets/js/bootstrap.js"></script>
+    <script src="../../admin/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../admin/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../../admin/assets/js/inspinia.js"></script>
+    <script src="../../admin/assets/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../admin/assets/js/demo/peity-demo.js"></script>
+    <script type="text/javascript" src="../../admin/assets/paginate/pagination.min.js"></script>
+    <script src="assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script>
+        var token = localStorage.getItem("token");
+        var host = window.location.protocol + "//" + window.location.host;
+        if (!token) {
+            localStorage.removeItem("name");
+            localStorage.removeItem("token");
+            window.location.replace('/login');
+        }
+
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: host + '/api/v1/admin/itemCategory/add',
+                type: 'Post',
+                data: formData,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', token);
+                },
+                contentType: false,
+                processData: false,
+            }).done(function (data) {
+                // If successful
+                window.location.replace('/admin/sub_category');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                // If fail
+                alert(jqXHR.responseJSON.error)
+
+            })
+        });
+
+
+    </script>
+</body>
+
+</html>

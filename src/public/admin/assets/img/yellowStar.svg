@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Group_6" data-name="Group 6" transform="translate(14329 -15948)">
+    <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(-14329 15948)" fill="rgba(255,255,255,0)" stroke="rgba(112,112,112,0)" stroke-width="1">
+      <rect width="24" height="24" stroke="none"/>
+      <rect x="0.5" y="0.5" width="23" height="23" fill="none"/>
+    </g>
+    <g id="Group_2" data-name="Group 2" transform="translate(-30.896 212.013)">
+      <path id="Icon_ionic-md-star-outline" data-name="Icon ionic-md-star-outline" d="M23.589,11.673l-7.117-.611L13.693,4.5l-2.78,6.562L3.8,11.673l5.4,4.68-1.618,6.96,6.116-3.69,6.116,3.69-1.618-6.96ZM14.5,18.28l-.81-.489-.81.489L9.944,20.053l.778-3.346.214-.921-.714-.619-2.6-2.251,3.421-.294.941-.081.368-.87,1.336-3.154,1.336,3.154.368.87.941.081,3.422.294-2.6,2.251-.714.619.214.92.778,3.346Z" transform="translate(-14299.797 15734.08)" fill="#fee333" stroke="#fee333" stroke-width="1"/>
+      <path id="Path_7" data-name="Path 7" d="M-14267.839,15768.343l3.952-1.026,2.1-3.858,2.41,4.155,4.769.729-3.684,3.506,1.039,4.325-4.534-1.746-4.815,3.1,1.115-5.914Z" transform="translate(-24.396 -21.552)" fill="#fee333"/>
+    </g>
+  </g>
+</svg>
